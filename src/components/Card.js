@@ -13,20 +13,42 @@ export default class Card extends Component {
       input: e.target.value
     })
   }
-  addTaskItem = (e) => {
-    this.setState({
-      taskItems: [...this.props.task.taskItems, this.state.input]
-    })
+  handleButtonClick = () => {
+    if (this.state.input !== '') {
+      this.props.addTaskItem(this.state.input, this.props.id);
+    }
+    
+  }
+  handleDeleteClick = (item) => {
+    this.props.removeTaskItem(item, this.props.id)
+  }
+  handleNextClick = (item) => {
+    this.props.moveNext(item, this.props.id);
+  }
+  handleBackClick = (item) => {
+    this.props.moveBack(item, this.props.id);
   }
   render() {
+    const length = this.props.task.taskItems.length; 
     return (
       <div>
         <div>
           <h3>{this.props.task.taskName}</h3>
         </div>
-        {this.props.task.taskItems.map((item => {
-          return <li>{item}</li>
-        }))}
+        {this.props.task.taskItems.map((item, i) => {
+          return <li key={i}>
+          {this.props.id > 1  ? <button onClick={() => this.handleBackClick(item)}>
+          back
+          </button> : null}
+            {item}
+            {this.props.id < 3 ? <button onClick={() => this.handleNextClick(item)}>
+            forward
+            </button> : null}
+            <button onClick={() => this.handleDeleteClick(item)}>
+              delete
+            </button>
+          </li>
+        })}
         <div>
           <input 
             type="text" 
@@ -34,7 +56,7 @@ export default class Card extends Component {
             onChange={this.inputChange}
           />
           <button 
-            onClick={this.addTaskItem}
+            onClick={this.handleButtonClick}
           >
           +</button>
         </div>

@@ -25,10 +25,43 @@ class TrelloCloneApp extends Component {
       }]
     }
   }
-  addTaskItem = (item) => {
-    this.setState({
-      taskItems: [...this.props.tasks.taskItems, item]
+  
+  addTaskItem = (item, id) => {
+    const index = this.state.tasks.findIndex(task => task.id === id);
+    console.log(index);
+    console.table(this.state.tasks[index])
+    this.setState(prevState => {
+      //copy states task array
+      const tasks = [...prevState.tasks] 
+      //update copy array at index
+      tasks[index] = {...tasks[index], taskItems: [...tasks[index].taskItems, item]} 
+      return { tasks }
     })
+  }
+  removeTaskItem = (item, id) => {
+    const index = this.state.tasks.findIndex(task => task.id === id);
+    this.setState(prevState => {
+      const tasks = [...prevState.tasks]
+      tasks[index] = {
+        ...tasks[index], 
+        taskItems: tasks[index].taskItems.filter(taskItem => taskItem !== item)
+      }
+      return { tasks }
+    })
+  }
+  moveNext = (item, id) => {
+    const index = this.state.tasks.findIndex(task => task.id === id);
+    if(index < this.state.tasks.length - 1) {
+      this.addTaskItem(item, id + 1);
+      this.removeTaskItem(item, id);
+    }
+  }
+  moveBack = (item, id) => {
+    const index = this.state.tasks.findIndex(task => task.id === id);
+    if(index > 0) {
+      this.addTaskItem(item, id - 1);
+      this.removeTaskItem(item, id);
+    }
   }
   render() {
     return (
@@ -38,6 +71,9 @@ class TrelloCloneApp extends Component {
           return <Card 
             task={task} 
             addTaskItem={this.addTaskItem}
+            removeTaskItem={this.removeTaskItem}
+            moveNext={this.moveNext}
+            moveBack={this.moveBack}
             id={task.id}
           />
         })}
