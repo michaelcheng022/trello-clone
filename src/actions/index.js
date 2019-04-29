@@ -3,5 +3,6 @@ export * from "./cardsActions";
 
 export const ACTIONS = {
   ADD_CARD: "ADD_CARD",
-  ADD_LIST: "ADD_LIST"
+  ADD_LIST: "ADD_LIST",
+  DRAG_HAPPENED: "DRAG_HAPPENED"
 };
