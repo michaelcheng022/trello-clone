@@ -7,6 +7,7 @@ A React & redux powered implementation of [Trello](https://trello.com/)
 ## Features
 * Todo boards that allow you to add new task items (cards)
 * Data persists between each board
+* Uses styled-components to allow for conditional styling
 * Uses [react-dnd](https://github.com/react-dnd/react-dnd) library to drag and drop cards between lists
 * Allows for reordering of lists as well as creation of new lists
 
