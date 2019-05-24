@@ -1,6 +1,8 @@
 ## [trello-clone](https://trello-react-clone.herokuapp.com/)
 
 A React & redux powered implementation of [Trello](https://trello.com/) 
+![Screenshot](./trello-clone-screenshot.png)
+
 
 ## Features
 * Todo boards that allow you to add new task items (cards)
